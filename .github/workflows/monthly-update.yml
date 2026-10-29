@@ -1,0 +1,75 @@
+name: Actualización mensual (noticias y transacciones)
+
+on:
+  schedule:
+    - cron: '0 14 1 * *' # día 1 de cada mes, 14:00 UTC (08:00 CDMX)
+  workflow_dispatch:
+    inputs:
+      deal_client:
+        description: 'Opcional: cliente de una nueva transacción'
+        required: false
+      deal_sector:
+        description: 'Sector de la nueva transacción (ej. Veterinario)'
+        required: false
+      deal_date:
+        description: 'Mes de cierre, formato AAAA-MM (ej. 2026-10)'
+        required: false
+      deal_type:
+        description: 'Tipo (default: Fusiones y adquisiciones)'
+        required: false
+      deal_description:
+        description: 'Descripción genérica; sin cifras no confirmadas'
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Agregar transacción (si se capturó en el formulario)
+        if: ${{ inputs.deal_client != '' }}
+        env:
+          DEAL_CLIENT: ${{ inputs.deal_client }}
+          DEAL_SECTOR: ${{ inputs.deal_sector }}
+          DEAL_DATE: ${{ inputs.deal_date }}
+          DEAL_TYPE: ${{ inputs.deal_type }}
+          DEAL_DESCRIPTION: ${{ inputs.deal_description }}
+        run: |
+          node scripts/add-deal.mjs \
+            --client "$DEAL_CLIENT" --sector "$DEAL_SECTOR" --date "$DEAL_DATE" \
+            --type "$DEAL_TYPE" --description "$DEAL_DESCRIPTION"
+
+      - name: Actualizar noticias de M&A
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/update-news.mjs
+
+      - name: Validar datos
+        run: node scripts/validate-data.mjs
+
+      - name: Abrir Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: bot/actualizacion-mensual
+          base: main
+          delete-branch: true
+          add-paths: public/data/*.json
+          commit-message: 'chore(data): actualización mensual de noticias y transacciones'
+          title: 'chore(data): actualización mensual de noticias y transacciones'
+          body: |
+            Actualización automática generada por `.github/workflows/monthly-update.yml`.
+
+            - `public/data/news.json`: noticias recientes de M&A (México/LatAm y mid-market), sin duplicados, máx. 12.
+            - `public/data/deals.json`: se modifica solo si se capturó una transacción al ejecutar el flujo manualmente.
+
+            Revisa los titulares y haz merge; el sitio se vuelve a publicar automáticamente.
+          labels: automated, data
