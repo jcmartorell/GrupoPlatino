@@ -1,0 +1,15 @@
+{
+  "maxItems": 12,
+  "maxAgeDays": 60,
+  "language": { "hl": "es-419", "gl": "MX", "ceid": "MX:es-419" },
+  "queries": [
+    "fusiones y adquisiciones México",
+    "adquisición empresa México mid-market",
+    "banca de inversión México M&A",
+    "fusiones y adquisiciones América Latina",
+    "private equity México adquisiciones",
+    "venta de empresa familiar México"
+  ],
+  "extraFeeds": [],
+  "excludeKeywords": ["horóscopo", "futbol", "fútbol", "liga mx", "telenovela"]
+}
