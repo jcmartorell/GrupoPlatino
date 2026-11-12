@@ -115,6 +115,13 @@ npm run update:news
 
 Para usar el dominio `www.gplatino.com`, configúralo en la plataforma elegida; las URL canónicas, `sitemap.xml`, `robots.txt` y metadatos Open Graph ya apuntan a ese dominio.
 
+### Subir a Vercel (pasos mínimos)
+
+1. En https://vercel.com/new elige **Import Git Repository** y selecciona `jcmartorell/GrupoPlatino` (autoriza la app de GitHub si lo pide).
+2. Framework Preset: **Vite**. Build Command: `npm run build`. Output Directory: `dist`. Install Command: el predeterminado. (`vercel.json` ya define build, salida y cabeceras.)
+3. Production Branch: `main`. **Deploy**. Cada PR genera además un preview automático.
+4. Opcional: Settings → Domains para conectar `www.gplatino.com`.
+
 ## Marca
 
 Azul marino `#25314F`, platino `#C9D0DC` como acento y fondos claro/oscuro alternados. Logos en `public/assets/`: el logo blanco se usa sobre fondos oscuros y el navy sobre fondos claros.
