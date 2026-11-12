@@ -1,11 +1,7 @@
 import { asset } from '../lib/asset';
 import { calendlyUrl } from '../content';
-import { formatMonth, useDeals } from '../lib/data';
 
 export default function Hero() {
-  const deals = useDeals();
-  const latest = deals.status === 'ready' ? deals.data[0] : undefined;
-
   return (
     <section
       id="inicio"
@@ -36,18 +32,6 @@ export default function Hero() {
           </a>
         </div>
 
-        {latest && (
-          <a
-            href="#transacciones"
-            className="mt-16 flex max-w-xl flex-col gap-1 border-l-2 border-platinum/70 pl-5 transition-colors hover:border-white"
-          >
-            <span className="eyebrow text-platinum">Última transacción</span>
-            <span className="text-lg font-semibold">{latest.client}</span>
-            <span className="text-sm text-white/65">
-              {latest.type} · {formatMonth(latest.date)}
-            </span>
-          </a>
-        )}
       </div>
     </section>
   );

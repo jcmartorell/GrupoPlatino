@@ -1,10 +1,3 @@
-export const contact = {
-  phone: '52-11-07-69',
-  emails: ['secretaria@gplatino.com', 'contacto@gplatino.com'],
-  formEmail: 'contacto@gplatino.com',
-  address: ['Coahuila 117, Depto 205', 'Roma Norte, Cuauhtémoc', 'Ciudad de México'],
-};
-
 export const services = [
   {
     title: 'Fusiones y adquisiciones',

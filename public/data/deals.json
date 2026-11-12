@@ -1,12 +1,14 @@
 {
-  "deals": [
-    {
-      "id": "clinica-animal-del-puente-2026-09",
-      "client": "Clínica Animal del Puente",
-      "sector": "Veterinario",
-      "type": "Fusiones y adquisiciones",
-      "date": "2026-09",
-      "description": "Asesoría financiera y estratégica a Clínica Animal del Puente en su transacción de fusiones y adquisiciones."
-    }
+  "_nota": "VALORES PLACEHOLDER POR CONFIRMAR: las cifras son de ejemplo y no son datos reales. Reemplazar con los numeros oficiales y cambiar pendingConfirmation a false. No incluir nombres de clientes.",
+  "pendingConfirmation": true,
+  "updatedAt": "2026-11-12",
+  "total": 25,
+  "byIndustry": [
+    { "industry": "Manufactura", "count": 6 },
+    { "industry": "Comercio", "count": 5 },
+    { "industry": "Servicios", "count": 5 },
+    { "industry": "Veterinario", "count": 4 },
+    { "industry": "Salud", "count": 3 },
+    { "industry": "Tecnología", "count": 2 }
   ]
 }

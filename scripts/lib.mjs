@@ -19,21 +19,25 @@ export async function writeJson(file, data) {
   await writeFile(file, JSON.stringify(data, null, 2) + '\n', 'utf8');
 }
 
-export const MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
-
 export function validateDeals(data) {
   const errors = [];
-  if (!data || !Array.isArray(data.deals)) return ['deals.json debe tener una propiedad "deals" (arreglo).'];
-  const ids = new Set();
-  data.deals.forEach((d, i) => {
-    const at = `deals[${i}]`;
-    for (const k of ['id', 'client', 'sector', 'type', 'date', 'description']) {
-      if (typeof d[k] !== 'string' || !d[k].trim()) errors.push(`${at}.${k} es obligatorio (texto).`);
-    }
-    if (d.date && !MONTH_RE.test(d.date)) errors.push(`${at}.date debe tener formato AAAA-MM (ej. 2026-09).`);
-    if (d.id && ids.has(d.id)) errors.push(`${at}.id duplicado: ${d.id}`);
-    ids.add(d.id);
+  if (!data || typeof data !== 'object') return ['deals.json debe ser un objeto.'];
+  if (!Number.isInteger(data.total) || data.total < 0) errors.push('"total" debe ser un entero >= 0.');
+  if (!Array.isArray(data.byIndustry)) return [...errors, '"byIndustry" debe ser un arreglo de { industry, count }.'];
+  const seen = new Set();
+  let sum = 0;
+  data.byIndustry.forEach((d, i) => {
+    const at = `byIndustry[${i}]`;
+    if (typeof d.industry !== 'string' || !d.industry.trim()) errors.push(`${at}.industry es obligatorio (texto).`);
+    if (!Number.isInteger(d.count) || d.count < 1) errors.push(`${at}.count debe ser un entero >= 1.`);
+    const key = String(d.industry).trim().toLowerCase();
+    if (seen.has(key)) errors.push(`${at}.industry duplicada: ${d.industry}`);
+    seen.add(key);
+    sum += Number.isInteger(d.count) ? d.count : 0;
   });
+  if (Number.isInteger(data.total) && data.total !== sum) {
+    errors.push(`"total" (${data.total}) debe ser igual a la suma de byIndustry (${sum}).`);
+  }
   return errors;
 }
 
