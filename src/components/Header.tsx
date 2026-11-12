@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { asset } from '../lib/asset';
+import { calendlyUrl } from '../content';
 
 const links = [
   { href: '#nosotros', label: 'Nosotros' },
@@ -63,6 +64,17 @@ export default function Header() {
           </ul>
         </nav>
 
+        <a
+          href={calendlyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`hidden px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] transition-colors md:inline-flex ${
+            solid ? 'bg-navy-800 text-white hover:bg-navy-700' : 'bg-white text-navy-800 hover:bg-platinum'
+          }`}
+        >
+          Agendar llamada<span className="sr-only"> (se abre en una pestaña nueva)</span>
+        </a>
+
         <button
           type="button"
           className={`-mr-2 p-2 md:hidden ${solid ? 'text-navy-800' : 'text-white'}`}
@@ -91,6 +103,16 @@ export default function Header() {
                 </a>
               </li>
             ))}
+            <li className="py-4">
+              <a
+                href={calendlyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn w-full bg-navy-800 text-white"
+              >
+                Agendar llamada<span className="sr-only"> (se abre en una pestaña nueva)</span>
+              </a>
+            </li>
           </ul>
         </nav>
       )}

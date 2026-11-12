@@ -1,4 +1,5 @@
 import { asset } from '../lib/asset';
+import { calendlyUrl } from '../content';
 import { formatMonth, useDeals } from '../lib/data';
 
 export default function Hero() {
@@ -27,8 +28,8 @@ export default function Hero() {
           Visión global, compromiso local.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <a href="#contacto" className="btn bg-white text-navy-800 hover:bg-platinum">
-            Agenda una conversación
+          <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="btn bg-white text-navy-800 hover:bg-platinum">
+            Agendar llamada<span className="sr-only"> (se abre en una pestaña nueva)</span>
           </a>
           <a href="#transacciones" className="btn border border-white/40 text-white hover:border-white hover:bg-white/10">
             Ver transacciones

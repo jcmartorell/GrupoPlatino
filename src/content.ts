@@ -29,3 +29,5 @@ export const pillars = [
   { title: 'Empresas medianas y familiares', text: 'Entendemos la dinámica de las estructuras familiares y del mid-market mexicano.' },
   { title: 'Relaciones de largo plazo', text: 'Confianza, discreción y excelencia profesional como base de cada relación.' },
 ];
+
+export const calendlyUrl = 'https://calendly.com/jcmartorell-gplatino/grupo-platino-discovery';

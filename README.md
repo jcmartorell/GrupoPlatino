@@ -5,6 +5,7 @@ Sitio web de **Grupo Platino**, banca de inversión boutique en México especial
 - **Stack:** Vite + React + TypeScript + Tailwind CSS v4. Tipografía Montserrat (autoalojada vía `@fontsource-variable/montserrat`).
 - **Sitio estático:** se despliega en GitHub Pages, Vercel o Netlify (configuración incluida).
 - **Contenido dinámico:** las secciones de *Transacciones* y *Noticias de M&A* se leen en el navegador desde `public/data/deals.json` y `public/data/news.json`.
+- **Agendar llamada:** botón en el header y el hero (abre Calendly en pestaña nueva) y widget embebido en *Contacto*, con fallback al enlace si el widget no carga.
 - **Agente mensual:** una GitHub Action actualiza las noticias cada mes y abre un Pull Request.
 
 ![Escritorio](docs/screenshots/desktop-full.png)
@@ -29,7 +30,7 @@ public/
   data/news.json      noticias de M&A (las actualiza el agente)
   og-image.png        imagen para redes sociales
 src/
-  content.ts          textos de servicios, contacto y pilares
+  content.ts          textos de servicios, contacto, pilares y URL de Calendly
   components/         Header, Hero, About, Services, Deals, News, Contact, Footer
   lib/data.ts         carga de JSON en runtime + formato de fechas
 scripts/
@@ -91,13 +92,21 @@ npm run update:news
 
 > Los PR creados con el `GITHUB_TOKEN` no disparan otros workflows (p. ej. CI). Si se requiere CI en esos PR, usa un token personal o GitHub App en `monthly-update.yml`.
 
+## Calendly (agendar llamada)
+
+- URL configurada en `src/content.ts` (`calendlyUrl`): https://calendly.com/jcmartorell-gplatino/grupo-platino-discovery
+- Botones "Agendar llamada" en el header (escritorio y menú móvil) y en el hero: abren el enlace en una pestaña nueva.
+- Widget inline en la sección *Contacto* (`src/components/Calendly.tsx`): carga `assets.calendly.com/assets/external/widget.js` bajo demanda. Si el script falla o el calendario no responde en 12 s (bloqueadores, red, CSP), se muestra un mensaje con el botón al enlace directo.
+- **CSP:** la política vive en `csp.mjs` y permite únicamente `script-src https://assets.calendly.com`, `frame-src https://calendly.com` y `connect-src https://*.calendly.com`. Se inyecta como `<meta>` en el build (cubre GitHub Pages) y también como cabecera en `vercel.json` y `netlify.toml`. Si cambias la política, actualiza los tres sitios. En `npm run dev` no se aplica (Vite necesita scripts inline).
+- Para cambiar de evento o cuenta, edita `calendlyUrl`.
+
 ## Despliegue
 
 | Plataforma | Configuración |
 | --- | --- |
 | GitHub Pages | `.github/workflows/deploy-pages.yml` (el sitio usa `base: './'`, funciona en subruta y en dominio propio). |
-| Vercel | `vercel.json` (build `npm run build`, salida `dist`). |
-| Netlify | `netlify.toml` (Node 22, salida `dist`). |
+| Vercel | `vercel.json` (build `npm run build`, salida `dist`, cabeceras CSP). |
+| Netlify | `netlify.toml` (Node 22, salida `dist`, cabeceras CSP). |
 
 Para usar el dominio `www.gplatino.com`, configúralo en la plataforma elegida; las URL canónicas, `sitemap.xml`, `robots.txt` y metadatos Open Graph ya apuntan a ese dominio.
 

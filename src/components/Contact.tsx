@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { contact } from '../content';
+import CalendlyEmbed from './Calendly';
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
@@ -31,7 +32,7 @@ export default function Contact() {
             Conversemos sobre el siguiente paso de su empresa.
           </h2>
           <p className="mt-5 max-w-md text-navy-800/80">
-            Para consultas, llámenos o envíenos un correo. También puede usar el formulario.
+            Para consultas, llámenos, envíenos un correo o agende una llamada directamente en el calendario.
           </p>
 
           <dl className="mt-10 space-y-7 text-sm">
@@ -94,6 +95,14 @@ export default function Contact() {
               : 'Se abrirá tu aplicación de correo con el mensaje listo para enviar.'}
           </p>
         </form>
+
+        <div id="agendar" className="lg:col-span-2">
+          <h3 className="text-xl font-semibold">Agenda una llamada de descubrimiento</h3>
+          <p className="mt-2 mb-6 max-w-2xl text-navy-800/80">
+            Elige el día y la hora que mejor te convenga para conversar con nuestro equipo.
+          </p>
+          <CalendlyEmbed />
+        </div>
       </div>
     </section>
   );

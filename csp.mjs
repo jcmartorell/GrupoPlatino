@@ -1,0 +1,12 @@
+export const csp = [
+  "default-src 'self'",
+  "script-src 'self' https://assets.calendly.com",
+  "style-src 'self' 'unsafe-inline' https://assets.calendly.com",
+  "img-src 'self' data: https:",
+  "font-src 'self' data:",
+  "connect-src 'self' https://calendly.com https://*.calendly.com",
+  "frame-src https://calendly.com https://*.calendly.com",
+  "form-action 'self' mailto:",
+  "base-uri 'self'",
+  "object-src 'none'",
+].join('; ');
