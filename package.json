@@ -1,0 +1,33 @@
+{
+  "name": "grupo-platino-landing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Landing page de Grupo Platino, banca de inversión boutique en México.",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run validate:data && tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "validate:data": "node scripts/validate-data.mjs",
+    "update:news": "node scripts/update-news.mjs",
+    "add:deal": "node scripts/add-deal.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@fontsource-variable/montserrat": "^5.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}

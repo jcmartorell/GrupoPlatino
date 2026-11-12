@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Montserrat Variable', 'Gotham', 'Helvetica Neue', Arial, sans-serif;
+  --color-navy-950: #121a2e;
+  --color-navy-900: #1b2540;
+  --color-navy-800: #25314f;
+  --color-navy-700: #33426a;
+  --color-navy-300: #9aa6c2;
+  --color-navy-100: #dfe4ee;
+  --color-platinum: #c9d0dc;
+  --color-paper: #f6f7f9;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-white font-sans text-navy-800 antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  :focus-visible {
+    outline: 2px solid #8fa2d6;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.28em];
+  }
+  .section-title {
+    @apply text-3xl font-light leading-tight tracking-tight sm:text-4xl;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] transition-colors duration-200;
+  }
+}
