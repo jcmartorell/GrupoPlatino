@@ -46,7 +46,7 @@ scripts/
 
 ## Cómo agregar una transacción
 
-La más reciente (por fecha) aparece primero y destacada como **Última transacción**. No se muestran cifras ni montos salvo que se confirmen explícitamente.
+Las transacciones se muestran como tarjetas iguales, ordenadas por fecha (la más reciente primero), sin etiquetas ni destacados. No se muestran cifras ni montos salvo que se confirmen explícitamente.
 
 **Opción A — editar el JSON.** Agrega un objeto a `public/data/deals.json`:
 
