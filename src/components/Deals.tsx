@@ -1,17 +1,14 @@
 import { formatMonth, useDeals, type Deal } from '../lib/data';
 
-function Tombstone({ deal, featured }: { deal: Deal; featured: boolean }) {
+function Tombstone({ deal }: { deal: Deal }) {
   return (
     <article
-      className={`flex flex-col justify-between border border-white/20 bg-white/[0.04] p-8 text-center ${
-        featured ? 'min-h-[22rem] sm:col-span-2 lg:col-span-3 lg:min-h-[18rem]' : 'min-h-[20rem]'
-      }`}
+      className="flex min-h-[20rem] flex-col justify-between border border-white/20 bg-white/[0.04] p-8 text-center"
     >
       <div>
-        {featured && <p className="eyebrow mb-6 text-platinum">Última transacción</p>}
         <p className="text-[0.7rem] font-semibold uppercase tracking-[0.3em] text-navy-300">{deal.sector}</p>
         <div className="mx-auto my-5 h-px w-10 bg-platinum/60" />
-        <h3 className={`font-semibold leading-snug ${featured ? 'text-3xl sm:text-4xl' : 'text-2xl'}`}>{deal.client}</h3>
+        <h3 className="text-2xl font-semibold leading-snug">{deal.client}</h3>
       </div>
       <div className="mt-8">
         <p className="mx-auto max-w-xl text-sm leading-relaxed text-white/70">{deal.description}</p>
@@ -53,8 +50,8 @@ export default function Deals() {
           )}
           {deals.status === 'ready' && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {deals.data.map((d, i) => (
-                <Tombstone key={d.id} deal={d} featured={i === 0} />
+              {deals.data.map((d) => (
+                <Tombstone key={d.id} deal={d} />
               ))}
             </div>
           )}
