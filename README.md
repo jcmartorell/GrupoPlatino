@@ -118,6 +118,7 @@ Azul marino `#25314F`, platino `#C9D0DC` como acento y fondos claro/oscuro alter
 
 Los textos actuales se basaron en el sitio actual (https://www.gplatino.com/) y fueron redactados con tono más claro y ordenado. No se pudo usar el PDF mencionado. Falta confirmar:
 
+- [ ] **Antigüedad “más de 40 años”:** confirmar la cifra y su sustento (año de fundación o trayectoria del equipo) antes de publicarla.
 - [ ] **Textos oficiales:** quiénes somos, visión/misión, descripción de cada servicio y los pilares de la sección “Quiénes somos”.
 - [ ] **Teléfono:** el sitio actual muestra `52-11-07-69` (sin lada); confirmar número completo y si debe ser clicable (`tel:`) o con WhatsApp.
 - [ ] **Correos:** el sitio actual lista `secretaria@gplatino.com` y `contacto@gplatino.com`; confirmar cuál(es) publicar y cuál recibe el formulario.

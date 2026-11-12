@@ -21,11 +21,11 @@ export default function Hero() {
       <div className="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-5 pb-16 pt-32 sm:px-8">
         <p className="eyebrow text-platinum">Banca de inversión boutique · México</p>
         <h1 id="hero-title" className="mt-6 max-w-3xl text-4xl font-light leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-          Soluciones financieras para empresas que quieren <span className="font-semibold">crecer con visión</span>.
+          Más de 40 años haciendo <span className="font-semibold">M&amp;A en Latinoamérica</span>.
         </h1>
         <p className="mt-7 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
-          Asesoramos a empresas medianas y estructuras familiares en fusiones, adquisiciones y reestructuraciones.
-          Visión global, compromiso local.
+          Acompañamos personalmente a dueños y familias empresarias en cada decisión, cuidando los intereses de cada
+          socio y familiar.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="btn bg-white text-navy-800 hover:bg-platinum">

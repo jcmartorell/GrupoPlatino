@@ -16,8 +16,8 @@ export default function About() {
           </div>
           <div className="space-y-5 text-base leading-relaxed text-navy-800/85 sm:text-lg">
             <p>
-              Grupo Platino es una banca de inversión boutique ubicada en México, especializada en empresas medianas y
-              estructuras familiares.
+              Grupo Platino es una banca de inversión boutique ubicada en México, con más de 40 años haciendo M&amp;A en
+              Latinoamérica y especializada en empresas medianas y estructuras familiares.
             </p>
             <p>
               Brindamos soluciones financieras personalizadas en fusiones, adquisiciones y reestructuraciones
