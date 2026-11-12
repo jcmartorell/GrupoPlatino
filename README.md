@@ -26,17 +26,17 @@ npm run preview    # sirve dist/ localmente
 ```
 public/
   assets/             logos (horizontal y monograma, versiones navy/blanco)
-  data/deals.json     transacciones (tombstones)
+  data/deals.json     cifras agregadas de transacciones (total y por industria)
   data/news.json      noticias de M&A (las actualiza el agente)
   og-image.png        imagen para redes sociales
 src/
-  content.ts          textos de servicios, contacto, pilares y URL de Calendly
+  content.ts          textos de servicios, pilares y URL de Calendly
   components/         Header, Hero, About, Services, Deals, News, Contact, Footer
   lib/data.ts         carga de JSON en runtime + formato de fechas
 scripts/
   update-news.mjs     agente de noticias (RSS / Google News RSS)
   news-config.json    consultas, feeds extra, máximo de items y antigüedad
-  add-deal.mjs        agrega una transacción a deals.json
+  add-deal.mjs        suma una transacción por industria en deals.json
   validate-data.mjs   valida ambos JSON (corre en cada build)
 .github/workflows/
   ci.yml              build en PRs
@@ -44,33 +44,38 @@ scripts/
   monthly-update.yml  agente mensual
 ```
 
-## Cómo agregar una transacción
+## Cómo actualizar las cifras de transacciones
 
-Las transacciones se muestran como tarjetas iguales, ordenadas por fecha (la más reciente primero), sin etiquetas ni destacados. No se muestran cifras ni montos salvo que se confirmen explícitamente.
-
-**Opción A — editar el JSON.** Agrega un objeto a `public/data/deals.json`:
+La sección *Transacciones* **no muestra nombres de clientes**: solo el total de transacciones y una gráfica de barras por industria (SVG/CSS, sin librerías). Los datos viven en `public/data/deals.json`:
 
 ```json
 {
-  "id": "nombre-cliente-2026-10",
-  "client": "Nombre del cliente",
-  "sector": "Sector",
-  "type": "Fusiones y adquisiciones",
-  "date": "2026-10",
-  "description": "Asesoría financiera y estratégica a Nombre del cliente en su transacción de fusiones y adquisiciones.",
-  "url": "https://opcional.com/comunicado"
+  "pendingConfirmation": true,
+  "updatedAt": "2026-11-12",
+  "total": 25,
+  "byIndustry": [
+    { "industry": "Manufactura", "count": 6 },
+    { "industry": "Comercio", "count": 5 }
+  ]
 }
 ```
 
-`id`, `client`, `sector`, `type`, `date` (formato `AAAA-MM`) y `description` son obligatorios; `url` es opcional.
+- `total` debe ser igual a la suma de los `count` (el build lo valida).
+- `pendingConfirmation: true` muestra bajo la gráfica la nota "Cifras ilustrativas, pendientes de confirmación". Ponlo en `false` (o elimínalo) cuando las cifras sean las oficiales.
+- No agregues nombres de clientes en ningún archivo del repositorio.
 
-**Opción B — por línea de comandos:**
+> **Valores actuales = placeholders por confirmar (no son reales):** total 25 — Manufactura 6, Comercio 5, Servicios 5, Veterinario 4, Salud 3, Tecnología 2.
+
+**Opción A — editar el JSON** a mano (puedes agregar industrias nuevas).
+
+**Opción B — por línea de comandos** (suma una transacción y recalcula el total):
 
 ```bash
-npm run add:deal -- --client "Nombre del cliente" --sector "Sector" --date 2026-10
+npm run add:deal -- --industry "Salud"            # +1
+npm run add:deal -- --industry "Comercio" --count 2
 ```
 
-**Opción C — desde GitHub:** *Actions → Actualización mensual → Run workflow* y captura cliente, sector y mes. El flujo agrega la transacción, actualiza noticias y abre un PR.
+**Opción C — desde GitHub:** *Actions → Actualización mensual → Run workflow*, captura industria y cantidad. El flujo suma la transacción, actualiza noticias y abre un PR.
 
 ## Agente mensual de noticias
 
@@ -120,13 +125,9 @@ Los textos actuales se basaron en el sitio actual (https://www.gplatino.com/) y 
 
 - [ ] **Antigüedad “más de 40 años”:** confirmar la cifra y su sustento (año de fundación o trayectoria del equipo) antes de publicarla.
 - [ ] **Textos oficiales:** quiénes somos, visión/misión, descripción de cada servicio y los pilares de la sección “Quiénes somos”.
-- [ ] **Teléfono:** el sitio actual muestra `52-11-07-69` (sin lada); confirmar número completo y si debe ser clicable (`tel:`) o con WhatsApp.
-- [ ] **Correos:** el sitio actual lista `secretaria@gplatino.com` y `contacto@gplatino.com`; confirmar cuál(es) publicar y cuál recibe el formulario.
-- [ ] **Dirección:** Coahuila 117, Depto 205, Roma Norte, Cuauhtémoc (se agregó “Ciudad de México”); confirmar código postal y si se añade mapa.
-- [ ] **Transacciones previas:** lista de clientes, sector, mes/año y descripción autorizada para publicar (sin cifras salvo autorización). Hoy solo aparece *Clínica Animal del Puente* (septiembre 2026, sector veterinario, descripción genérica).
+- [ ] **Cifras de transacciones:** número total y desglose por industria reales (hoy son placeholders marcados como "por confirmar" en `deals.json`; ver valores arriba).
 - [ ] **Autorización de confidencialidad** de clientes para publicar nombre y logotipo.
 - [ ] **Equipo:** nombres, cargos y fotos si se desea una sección de equipo.
-- [ ] **Formulario de contacto:** hoy abre el correo del usuario (`mailto:`); decidir si se integra un servicio (Formspree, Netlify Forms, etc.).
 - [ ] **Aviso de privacidad** y términos, requeridos si se captan datos.
 - [ ] **Dominio, analítica y redes sociales** (LinkedIn, etc.).
 - [ ] **Versión en inglés** (si se requiere).

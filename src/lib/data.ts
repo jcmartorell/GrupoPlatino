@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export interface Deal {
-  id: string;
-  client: string;
-  sector: string;
-  type: string;
-  date: string;
-  description: string;
-  url?: string;
+export interface IndustryCount {
+  industry: string;
+  count: number;
+}
+
+export interface DealStats {
+  total: number;
+  byIndustry: IndustryCount[];
+  pendingConfirmation: boolean;
+  updatedAt?: string;
 }
 
 export interface NewsItem {
@@ -19,7 +21,10 @@ export interface NewsItem {
 }
 
 interface DealsFile {
-  deals: Deal[];
+  total: number;
+  byIndustry: IndustryCount[];
+  pendingConfirmation?: boolean;
+  updatedAt?: string;
 }
 interface NewsFile {
   updatedAt?: string;
@@ -46,23 +51,23 @@ function useJson<T>(file: string): State<T> {
   return state;
 }
 
-export function useDeals() {
+export function useDeals(): State<DealStats> {
   const state = useJson<DealsFile>('deals.json');
   if (state.status !== 'ready') return state;
-  const deals = [...state.data.deals].sort((a, b) => b.date.localeCompare(a.date));
-  return { status: 'ready' as const, data: deals };
+  const { total, byIndustry, pendingConfirmation, updatedAt } = state.data;
+  return {
+    status: 'ready',
+    data: {
+      total,
+      byIndustry: [...byIndustry].sort((a, b) => b.count - a.count),
+      pendingConfirmation: Boolean(pendingConfirmation),
+      updatedAt,
+    },
+  };
 }
 
 export function useNews() {
   return useJson<NewsFile>('news.json');
-}
-
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
-export function formatMonth(ym: string): string {
-  const [y, m] = ym.split('-').map(Number);
-  if (!y || !m) return ym;
-  return capitalize(new Intl.DateTimeFormat('es-MX', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(Date.UTC(y, m - 1, 1)));
 }
 
 export function formatDate(iso: string): string {
