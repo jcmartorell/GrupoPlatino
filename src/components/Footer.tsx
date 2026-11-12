@@ -7,8 +7,6 @@ export default function Footer() {
         <img src={asset('logo-horizontal-white.png')} alt="Grupo Platino" width={1748} height={551} className="h-10 w-auto" />
         <p className="text-xs leading-relaxed text-white/60">
           © {new Date().getFullYear()} Grupo Platino. Todos los derechos reservados.
-          <br />
-          Coahuila 117, Depto 205, Roma Norte, Cuauhtémoc, Ciudad de México.
         </p>
       </div>
     </footer>
